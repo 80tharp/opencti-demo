@@ -28,7 +28,7 @@ After you have installed Docker Desktop and Git:
 
 Navigate to the /opencti-demo directory
 
-    `cd opencti-demo`
+   `cd opencti-demo`
 
 5. Edit the .env file in a text editor to update the admin email address
 
