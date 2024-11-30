@@ -22,7 +22,7 @@ services:
       - xpack.security.enabled=false
       - thread_pool.search.queue_size=5000
       - logger.org.elasticsearch.discovery="ERROR"
-      - "ES_JAVA_OPTS=-Xms${ELASTIC_MEMORY_SIZE} -Xmx${ELASTIC_MEMORY_SIZE}"
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
     restart: always
     ulimits:
       memlock:
@@ -43,8 +43,8 @@ services:
     ports:
       - "9000:9000"
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}    
+      MINIO_ROOT_USER: opencti
+      MINIO_ROOT_PASSWORD: changeme   
     command: server /data
     restart: always
     healthcheck:
@@ -55,8 +55,8 @@ services:
   rabbitmq:
     image: rabbitmq:3.13-management
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_USER=opencti
+      - RABBITMQ_DEFAULT_PASS=changeme
       - RABBITMQ_NODENAME=rabbit01@localhost
     volumes:
       - amqpdata:/var/lib/rabbitmq
@@ -72,10 +72,10 @@ services:
     environment:
       - NODE_OPTIONS=--max-old-space-size=8096
       - APP__PORT=8080
-      - APP__BASE_URL=${OPENCTI_BASE_URL}
-      - APP__ADMIN__EMAIL=${OPENCTI_ADMIN_EMAIL}
-      - APP__ADMIN__PASSWORD=${OPENCTI_ADMIN_PASSWORD}
-      - APP__ADMIN__TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - APP__BASE_URL=http://localhost:8080
+      - APP__ADMIN__EMAIL=admin@opencti.io
+      - APP__ADMIN__PASSWORD=hoyasaxa
+      - APP__ADMIN__TOKEN=ChangeMe_UUIDv4
       - APP__APP_LOGS__LOGS_LEVEL=error
       - REDIS__HOSTNAME=redis
       - REDIS__PORT=6379
@@ -83,18 +83,18 @@ services:
       - MINIO__ENDPOINT=minio
       - MINIO__PORT=9000
       - MINIO__USE_SSL=false
-      - MINIO__ACCESS_KEY=${MINIO_ROOT_USER}
-      - MINIO__SECRET_KEY=${MINIO_ROOT_PASSWORD}
+      - MINIO__ACCESS_KEY=opencti
+      - MINIO__SECRET_KEY=changeme
       - RABBITMQ__HOSTNAME=rabbitmq
       - RABBITMQ__PORT=5672
       - RABBITMQ__PORT_MANAGEMENT=15672
       - RABBITMQ__MANAGEMENT_SSL=false
-      - RABBITMQ__USERNAME=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ__PASSWORD=${RABBITMQ_DEFAULT_PASS}
-      - SMTP__HOSTNAME=${SMTP_HOSTNAME}
+      - RABBITMQ__USERNAME=opencti
+      - RABBITMQ__PASSWORD=changeme
+      - SMTP__HOSTNAME=localhost
       - SMTP__PORT=25
       - PROVIDERS__LOCAL__STRATEGY=LocalStrategy
-      - APP__HEALTH_ACCESS_KEY=${OPENCTI_HEALTHCHECK_ACCESS_KEY}
+      - APP__HEALTH_ACCESS_KEY=changeme
     ports:
       - "8080:8080"
     depends_on:
@@ -108,7 +108,7 @@ services:
         condition: service_healthy
     restart: always
     healthcheck:
-      test:  ["CMD", "wget", "-qO-", "http://opencti:8080/health?health_access_key=${OPENCTI_HEALTHCHECK_ACCESS_KEY}"]
+      test:  ["CMD", "wget", "-qO-", "http://opencti:8080/health?health_access_key=changeme"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -117,7 +117,7 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
       - WORKER_LOG_LEVEL=info
     depends_on:
       opencti:
@@ -131,8 +131,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_EXPORT_FILE_STIX_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=dd817c8b-abae-460a-9ebc-97b1551e70e6
       - CONNECTOR_TYPE=INTERNAL_EXPORT_FILE
       - CONNECTOR_NAME=ExportFileStix2
       - CONNECTOR_SCOPE=application/json
@@ -146,8 +146,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_EXPORT_FILE_CSV_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=ba187fb-fde8-4063-92b5-c3da34060dd7 # Valid UUIDv4
       - CONNECTOR_TYPE=INTERNAL_EXPORT_FILE
       - CONNECTOR_NAME=ExportFileCsv
       - CONNECTOR_SCOPE=text/csv
@@ -161,8 +161,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_EXPORT_FILE_TXT_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=ca715d9c-bd64-4351-91db-33a8d728a58b # Valid UUIDv4
       - CONNECTOR_TYPE=INTERNAL_EXPORT_FILE
       - CONNECTOR_NAME=ExportFileTxt
       - CONNECTOR_SCOPE=text/plain
@@ -176,8 +176,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_IMPORT_FILE_STIX_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=72327164-0b35-482b-b5d6-a5a3f76b845f # Valid UUIDv4
       - CONNECTOR_TYPE=INTERNAL_IMPORT_FILE
       - CONNECTOR_NAME=ImportFileStix
       - CONNECTOR_VALIDATE_BEFORE_IMPORT=true # Validate any bundle before import
@@ -193,8 +193,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_IMPORT_DOCUMENT_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=c3970f8a-ce4b-4497-a381-20b7256f56f0 # Valid UUIDv4
       - CONNECTOR_TYPE=INTERNAL_IMPORT_FILE
       - CONNECTOR_NAME=ImportDocument
       - CONNECTOR_VALIDATE_BEFORE_IMPORT=true # Validate any bundle before import
@@ -213,8 +213,8 @@ services:
     platform: linux/amd64
     environment:
       - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
-      - CONNECTOR_ID=${CONNECTOR_ANALYSIS_ID} # Valid UUIDv4
+      - OPENCTI_TOKEN=ChangeMe_UUIDv4
+      - CONNECTOR_ID=4dffd77c-ec11-4abe-bca7-fd997f79fa36 # Valid UUIDv4
       - CONNECTOR_TYPE=INTERNAL_ANALYSIS
       - CONNECTOR_NAME=ImportDocumentAnalysis
       - CONNECTOR_VALIDATE_BEFORE_IMPORT=false # Validate any bundle before import
