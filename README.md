@@ -31,3 +31,5 @@ After you have installed Docker Desktop and Git:
 `docker compose up -d`
 
 6. Navigate to "http://localhost:8080" and enter the username and password from the .env file
+   User: admin@opencti.io
+   Password: hoyasaxa
