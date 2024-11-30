@@ -26,12 +26,20 @@ After you have installed Docker Desktop and Git:
 
 `git clone https://github.com/80tharp/opencti-demo`
 
+Navigate to the /opencti-demo directory
+
+`cd opencti-demo`
+
+5. Edit the .env file in a text editor to update the admin email address
+
+`sudo nano .env` on mac/linux or via notepad on windows
+
 5. Run Docker in detached mode (use sudo if on mac)
 
 `docker compose up -d`
 
 6. Navigate to "http://localhost:8080" and enter the username and password from the .env file
 
-   User: admin
+   User: {your email address}
 
    Password: hoyasaxa
