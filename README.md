@@ -12,31 +12,31 @@ After you have installed Docker Desktop and Git:
 1. Open your Command Line (terminal on mac, powershell as admin on windows)
 
 2. Navigate to the directory you want to use
-    - example: `cd Documents`
+    example: `cd Documents`
 
 3. Create a directory to contain the required docker files
 
-`mkdir docker-demo`
+    `mkdir docker-demo`
 
 4. Navigate into that directory
 
-`cd docker-demo`
+    `cd docker-demo`
 
 4. Download the compose.yml and .env files from Github
 
-`git clone https://github.com/80tharp/opencti-demo`
+    `git clone https://github.com/80tharp/opencti-demo`
 
 Navigate to the /opencti-demo directory
 
-`cd opencti-demo`
+    `cd opencti-demo`
 
 5. Edit the .env file in a text editor to update the admin email address
 
-`sudo nano .env` on mac/linux or via notepad on windows
+    `sudo nano .env` on mac/linux or via notepad on windows
 
 5. Run Docker in detached mode (use sudo if on mac)
 
-`docker compose up -d`
+    `docker compose up -d`
 
 6. Navigate to "http://localhost:8080" and enter the username and password from the .env file
 
