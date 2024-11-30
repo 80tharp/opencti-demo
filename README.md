@@ -32,6 +32,6 @@ After you have installed Docker Desktop and Git:
 
 6. Navigate to "http://localhost:8080" and enter the username and password from the .env file
 
-   User: admin@opencti.io
+   User: admin
 
    Password: hoyasaxa
